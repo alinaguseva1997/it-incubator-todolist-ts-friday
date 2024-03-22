@@ -16,15 +16,18 @@ import { AddItemForm } from "components/AddItemForm/AddItemForm"
 import { Todolist } from "./Todolist/Todolist"
 import { Navigate } from "react-router-dom"
 import { useAppDispatch } from "hooks/useAppDispatch"
+import { todolistsSelector } from "features/TodolistsList/todolists-selectors"
+import { isLoggedInSelector } from "features/Login/auth-selectors"
+import { tasksSelector } from "features/TodolistsList/tasks-selectors"
 
 type PropsType = {
   demo?: boolean
 }
 
 export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
-  const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>((state) => state.todolists)
-  const tasks = useSelector<AppRootStateType, TasksStateType>((state) => state.tasks)
-  const isLoggedIn = useSelector<AppRootStateType, boolean>((state) => state.auth.isLoggedIn)
+  const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(todolistsSelector)
+  const tasks = useSelector<AppRootStateType, TasksStateType>(tasksSelector)
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(isLoggedInSelector)
 
   const dispatch = useAppDispatch()
 

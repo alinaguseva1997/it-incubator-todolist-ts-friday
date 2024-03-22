@@ -4,7 +4,6 @@ import { EditableSpan } from "components/EditableSpan/EditableSpan"
 import { Task } from "./Task/Task"
 import { TaskStatuses, TaskType } from "api/todolists-api"
 import { FilterValuesType, TodolistDomainType } from "../todolists-reducer"
-import { useAppDispatch } from "hooks/useAppDispatch"
 import { Button, IconButton } from "@mui/material"
 import { Delete } from "@mui/icons-material"
 
@@ -22,7 +21,6 @@ type PropsType = {
 }
 
 export const Todolist = React.memo(function ({ demo = false, ...props }: PropsType) {
-  const dispatch = useAppDispatch()
 
   const addTask = useCallback(
     (title: string) => {
