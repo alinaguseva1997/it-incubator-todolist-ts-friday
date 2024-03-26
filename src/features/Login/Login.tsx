@@ -10,7 +10,6 @@ import { isLoggedInSelector } from "features/Login/auth-selectors"
 
 export const Login = () => {
   const dispatch = useAppDispatch()
-
   const isLoggedIn = useSelector<AppRootStateType, boolean>(isLoggedInSelector)
 
   const formik = useFormik({
