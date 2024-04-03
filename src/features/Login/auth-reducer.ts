@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { AppThunk } from "app/store"
 import { appActions } from "app/app-reducer"
 import { todolistsAction } from "features/TodolistsList/todolists-reducer"
-import { handleServerAppError } from "utils/handleServerAppError"
+import { handleServerAppError } from "utils"
 
 const slice = createSlice({
   name: "auth",

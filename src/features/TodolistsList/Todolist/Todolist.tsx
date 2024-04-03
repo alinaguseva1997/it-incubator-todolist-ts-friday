@@ -1,11 +1,11 @@
 import React, { useCallback } from "react"
-import { AddItemForm } from "components/AddItemForm/AddItemForm"
-import { EditableSpan } from "components/EditableSpan/EditableSpan"
 import { Task } from "./Task/Task"
 import { TaskStatuses, TaskType } from "api/todolists-api"
 import { FilterValuesType, TodolistDomainType } from "../todolists-reducer"
 import { Button, IconButton } from "@mui/material"
 import { Delete } from "@mui/icons-material"
+import { AddItemForm } from "components/AddItemForm"
+import { EditableSpan } from "components/EditableSpan"
 
 type PropsType = {
   todolist: TodolistDomainType
@@ -21,7 +21,6 @@ type PropsType = {
 }
 
 export const Todolist = React.memo(function ({ demo = false, ...props }: PropsType) {
-
   const addTask = useCallback(
     (title: string) => {
       props.addTask(title, props.todolist.id)
