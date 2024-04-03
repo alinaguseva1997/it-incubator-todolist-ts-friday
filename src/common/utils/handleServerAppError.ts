@@ -1,6 +1,6 @@
-import { ResponseType } from "api/todolists-api"
 import { Dispatch } from "redux"
 import { appActions, SetAppErrorActionType, SetAppStatusActionType } from "app/app-reducer"
+import { ResponseType } from "common/types/types"
 
 export const handleServerAppError = <D>(
   data: ResponseType<D>,

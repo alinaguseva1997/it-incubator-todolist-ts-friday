@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react"
 import "./App.css"
 import { TodolistsList } from "features/TodolistsList/TodolistsList"
-import { ErrorSnackbar } from "components/ErrorSnackbar/ErrorSnackbar"
 import { useDispatch, useSelector } from "react-redux"
 import { AppRootStateType } from "./store"
 import { initializeAppTC, RequestStatusType } from "./app-reducer"
@@ -21,6 +20,7 @@ import {
 import { Menu } from "@mui/icons-material"
 import { isInitializedSelector, statusSelector } from "app/app-selectors"
 import { isLoggedInSelector } from "features/Login/auth-selectors"
+import { ErrorSnackbar } from "common/components/ErrorSnackbar/ErrorSnackbar"
 
 type PropsType = {
   demo?: boolean

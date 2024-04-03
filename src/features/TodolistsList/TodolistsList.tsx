@@ -11,15 +11,15 @@ import {
   todolistsAction,
 } from "./todolists-reducer"
 import { TasksStateType, tasksThunks } from "./tasks-reducer"
-import { TaskStatuses } from "api/todolists-api"
 import { Grid, Paper } from "@mui/material"
-import { AddItemForm } from "components/AddItemForm/AddItemForm"
 import { Todolist } from "./Todolist/Todolist"
 import { Navigate } from "react-router-dom"
-import { useAppDispatch } from "hooks/useAppDispatch"
+import { useAppDispatch } from "common/hooks/useAppDispatch"
 import { todolistsSelector } from "features/TodolistsList/todolists-selectors"
 import { isLoggedInSelector } from "features/Login/auth-selectors"
 import { tasksSelector } from "features/TodolistsList/tasks-selectors"
+import { TaskStatuses } from "common/enum/enum"
+import { AddItemForm } from "common/components/AddItemForm"
 
 type PropsType = {
   demo?: boolean
