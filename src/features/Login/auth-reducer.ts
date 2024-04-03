@@ -1,34 +1,37 @@
 import { authAPI, LoginParamsType } from "api/todolists-api"
-import { handleServerAppError, handleServerNetworkError } from "utils/error-utils"
+import { handleServerNetworkError } from "utils/handleServerNetworkError"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { AppThunk } from "app/store"
 import { appActions } from "app/app-reducer"
 import { todolistsAction } from "features/TodolistsList/todolists-reducer"
+import { handleServerAppError } from "utils/handleServerAppError"
 
 const slice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: {
     isLoggedIn: false,
   },
   reducers: {
-    setIsLoggedIn: (state, action: PayloadAction<{isLoggedIn: boolean}>) => { //подредьюсер в этом случае
+    setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
+      //подредьюсер в этом случае
       state.isLoggedIn = action.payload.isLoggedIn
-    }
-  }
+    },
+  },
 })
 export const authReducer = slice.reducer //reducer для использования снаружи
 export const authActions = slice.actions
 
 // thunks
 export const loginTC =
-  (data: LoginParamsType): AppThunk => (dispatch) => {
-    dispatch(appActions.setAppStatus({status: "loading"}))
+  (data: LoginParamsType): AppThunk =>
+  (dispatch) => {
+    dispatch(appActions.setAppStatus({ status: "loading" }))
     authAPI
       .login(data)
       .then((res) => {
         if (res.data.resultCode === 0) {
-          dispatch(authActions.setIsLoggedIn({isLoggedIn: true})) //экшн крейтор в этом случае, взятый из обьекта, для использования в dispatch
-          dispatch(appActions.setAppStatus({status: "succeeded"}))
+          dispatch(authActions.setIsLoggedIn({ isLoggedIn: true })) //экшн крейтор в этом случае, взятый из обьекта, для использования в dispatch
+          dispatch(appActions.setAppStatus({ status: "succeeded" }))
         } else {
           handleServerAppError(res.data, dispatch)
         }
@@ -38,13 +41,13 @@ export const loginTC =
       })
   }
 export const logoutTC = (): AppThunk => (dispatch) => {
-  dispatch(appActions.setAppStatus({status: "loading"}))
+  dispatch(appActions.setAppStatus({ status: "loading" }))
   authAPI
     .logout()
     .then((res) => {
       if (res.data.resultCode === 0) {
-        dispatch(authActions.setIsLoggedIn({isLoggedIn: false}))
-        dispatch(appActions.setAppStatus({status: "succeeded"}))
+        dispatch(authActions.setIsLoggedIn({ isLoggedIn: false }))
+        dispatch(appActions.setAppStatus({ status: "succeeded" }))
         dispatch(todolistsAction.clearTodosData())
       } else {
         handleServerAppError(res.data, dispatch)
@@ -54,16 +57,6 @@ export const logoutTC = (): AppThunk => (dispatch) => {
       handleServerNetworkError(error, dispatch)
     })
 }
-
-
-
-
-
-
-
-
-
-
 
 // type ActionsType = ReturnType<typeof setIsLoggedInAC> | ClearDataActionType
 
