@@ -7,9 +7,10 @@ import {
   fetchTodolistsTC,
   FilterValuesType,
   removeTodolistTC,
-  TodolistDomainType, todolistsAction
+  TodolistDomainType,
+  todolistsAction,
 } from "./todolists-reducer"
-import { addTaskTC, removeTaskTC, TasksStateType, updateTaskTC } from "./tasks-reducer"
+import { addTaskTC, TasksStateType, tasksThunks, updateTaskTC } from "./tasks-reducer"
 import { TaskStatuses } from "api/todolists-api"
 import { Grid, Paper } from "@mui/material"
 import { AddItemForm } from "components/AddItemForm/AddItemForm"
@@ -39,7 +40,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   }, [])
 
   const removeTask = useCallback(function (id: string, todolistId: string) {
-    dispatch(removeTaskTC(id, todolistId))
+    dispatch(tasksThunks.removeTask(id, todolistId))
   }, [])
 
   const addTask = useCallback(function (title: string, todolistId: string) {
@@ -55,7 +56,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   }, [])
 
   const changeFilter = useCallback(function (value: FilterValuesType, todolistId: string) {
-    dispatch(todolistsAction.changeTodolistFilter({id: todolistId,filter: value}))
+    dispatch(todolistsAction.changeTodolistFilter({ id: todolistId, filter: value }))
   }, [])
 
   const removeTodolist = useCallback(function (id: string) {
