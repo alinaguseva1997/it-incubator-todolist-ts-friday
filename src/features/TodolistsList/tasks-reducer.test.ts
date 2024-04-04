@@ -1,5 +1,5 @@
 import { tasksReducer, TasksStateType, tasksThunks } from "./tasks-reducer"
-import { todolistsAction } from "features/TodolistsList/todolists-reducer"
+import { todolistsAction, todolistsThunks } from "features/TodolistsList/todolists-reducer"
 import { TaskPriorities, TaskStatuses } from "common/enum/enum"
 import { TaskType } from "features/TodolistsList/todolists-api"
 
@@ -85,19 +85,6 @@ beforeEach(() => {
   }
 })
 
-test("correct task should be deleted from correct array", () => {
-  // 1 параметр - то, что санка возвращает
-  // 2 параметр - метаданные, данные о данных. Напрямую не используются, но могут пригодиться для теста.В нашем случае он никак не влияет на тест
-  // 3 параметр - ид, которую принимает наш тест
-  const payload = { todolistId: "2", taskId: "todolistId2" }
-  const action = tasksThunks.removeTask.fulfilled(payload, "requestId", payload)
-
-  const endState = tasksReducer(startState, action)
-
-  expect(endState["todolistId1"].length).toBe(3)
-  expect(endState["todolistId2"].length).toBe(2)
-  expect(endState["todolistId2"].every((t) => t.id != "2")).toBeTruthy()
-})
 test("correct task should be added to correct array", () => {
   const task = {
     todoListId: "todolistId2",
@@ -138,6 +125,19 @@ test("status of specified task should be changed", () => {
   expect(endState["todolistId1"][1].status).toBe(TaskStatuses.Completed)
   expect(endState["todolistId2"][1].status).toBe(TaskStatuses.New)
 })
+test("correct task should be deleted from correct array", () => {
+  // 1 параметр - то, что санка возвращает
+  // 2 параметр - метаданные, данные о данных. Напрямую не используются, но могут пригодиться для теста.В нашем случае он никак не влияет на тест
+  // 3 параметр - ид, которую принимает наш тест
+  const payload = { todolistId: "2", taskId: "todolistId2" }
+  const action = tasksThunks.removeTask.fulfilled(payload, "requestId", payload)
+
+  const endState = tasksReducer(startState, action)
+
+  expect(endState["todolistId1"].length).toBe(3)
+  expect(endState["todolistId2"].length).toBe(2)
+  expect(endState["todolistId2"].every((t) => t.id != "2")).toBeTruthy()
+})
 test("title of specified task should be changed", () => {
   const payload = { taskId: "2", domainModel: { title: "yogurt" }, todolistId: "todolistId2" }
   const action = tasksThunks.updateTask.fulfilled(payload, "requestId", payload)
@@ -149,14 +149,13 @@ test("title of specified task should be changed", () => {
   expect(endState["todolistId2"][0].title).toBe("bread")
 })
 test("new array should be added when new todolist is added", () => {
-  const action = todolistsAction.addTodolist({
-    todolist: {
-      id: "blabla",
-      title: "new todolist",
-      order: 0,
-      addedDate: "",
-    },
-  })
+  const todolist = {
+    id: "blabla",
+    title: "new todolist",
+    order: 0,
+    addedDate: "",
+  }
+  const action = todolistsThunks.addTodolist.fulfilled({ todolist }, "requestId", "")
 
   const endState = tasksReducer(startState, action)
 
@@ -170,7 +169,7 @@ test("new array should be added when new todolist is added", () => {
   expect(endState[newKey]).toEqual([])
 })
 test("propertry with todolistId should be deleted", () => {
-  const action = todolistsAction.removeTodolist({ id: "todolistId2" })
+  const action = todolistsThunks.removeTodolist.fulfilled({ id: "todolistId2" }, "requestId", "todolistId2")
 
   const endState = tasksReducer(startState, action)
 
@@ -181,12 +180,15 @@ test("propertry with todolistId should be deleted", () => {
 })
 
 test("empty arrays should be added when we set todolists", () => {
-  const action = todolistsAction.setTodolists({
-    todolists: [
-      { id: "1", title: "title 1", order: 0, addedDate: "" },
-      { id: "2", title: "title 2", order: 0, addedDate: "" },
-    ],
-  })
+  const action = todolistsThunks.fetchTodolists.fulfilled(
+    {
+      todolists: [
+        { id: "1", title: "title 1", order: 0, addedDate: "" },
+        { id: "2", title: "title 2", order: 0, addedDate: "" },
+      ],
+    },
+    "requestId",
+  )
 
   const endState = tasksReducer({}, action)
 
