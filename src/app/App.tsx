@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useCallback, useEffect } from "react"
+import { useSelector } from "react-redux"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import {
   AppBar,
   Button,
@@ -10,39 +10,39 @@ import {
   LinearProgress,
   Toolbar,
   Typography,
-} from "@mui/material";
-import { Menu } from "@mui/icons-material";
-import { initializeAppTC } from "app/app.reducer";
-import { Login } from "features/auth/Login";
-import { logoutTC } from "features/auth/auth.reducer";
-import "./App.css";
-import { TodolistsList } from "features/TodolistsList/TodolistsList";
-import { ErrorSnackbar } from "common/components";
-import { useAppDispatch } from "common/hooks";
-import { selectIsLoggedIn } from "features/auth/auth.selectors";
-import { selectAppStatus, selectIsInitialized } from "app/app.selectors";
+} from "@mui/material"
+import { Menu } from "@mui/icons-material"
+import { initializeAppTC } from "app/app.reducer"
+import { Login } from "features/auth/Login"
+import "./App.css"
+import { TodolistsList } from "features/TodolistsList/TodolistsList"
+import { ErrorSnackbar } from "common/components"
+import { useAppDispatch } from "common/hooks"
+import { selectIsLoggedIn } from "features/auth/auth.selectors"
+import { selectAppStatus, selectIsInitialized } from "app/app.selectors"
+import { authThunks } from "features/auth/auth.reducer"
 
 function App() {
-  const status = useSelector(selectAppStatus);
-  const isInitialized = useSelector(selectIsInitialized);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const status = useSelector(selectAppStatus)
+  const isInitialized = useSelector(selectIsInitialized)
+  const isLoggedIn = useSelector(selectIsLoggedIn)
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(initializeAppTC());
-  }, []);
+    dispatch(initializeAppTC())
+  }, [])
 
   const logoutHandler = useCallback(() => {
-    dispatch(logoutTC());
-  }, []);
+    dispatch(authThunks.logout())
+  }, [])
 
   if (!isInitialized) {
     return (
       <div style={{ position: "fixed", top: "30%", textAlign: "center", width: "100%" }}>
         <CircularProgress />
       </div>
-    );
+    )
   }
 
   return (
@@ -71,7 +71,7 @@ function App() {
         </Container>
       </div>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App
