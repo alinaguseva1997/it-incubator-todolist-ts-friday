@@ -12,7 +12,6 @@ import {
   Typography,
 } from "@mui/material"
 import { Menu } from "@mui/icons-material"
-import { initializeAppTC } from "app/app.reducer"
 import { Login } from "features/auth/Login"
 import "./App.css"
 import { TodolistsList } from "features/TodolistsList/TodolistsList"
@@ -30,7 +29,7 @@ function App() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(initializeAppTC())
+    dispatch(authThunks.initializeApp())
   }, [])
 
   const logoutHandler = useCallback(() => {
