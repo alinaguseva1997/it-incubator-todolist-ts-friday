@@ -42,7 +42,7 @@ export const Login = () => {
         .unwrap() //он следит за тем, какой ответ приходит: если fullfiled - попадем в then, если rejected - попадем в catch. Это нужно, потому что с использованием createAsyncThunk мы всегда получаем promise.fullfiled
         .then((res) => {})
         .catch((err: BaseResponseType) => {
-          err.fieldsErrors.forEach((fieldError) => {
+          err.fieldsErrors?.forEach((fieldError) => {
             formikHelpers.setFieldError(fieldError.field, fieldError.error)
           })
         }) //message:Rejected будет возвращаться, если в rejectWithValue мы передаем null
