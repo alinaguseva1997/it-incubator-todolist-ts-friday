@@ -3,7 +3,7 @@ import { FormikHelpers, useFormik } from "formik"
 import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField } from "@mui/material"
-import { useAppDispatch } from "common/hooks"
+import { useActions, useAppDispatch } from "common/hooks"
 import { selectIsLoggedIn } from "features/auth/auth.selectors"
 import { authThunks } from "features/auth/auth.reducer"
 import { BaseResponseType } from "common/types"
@@ -21,8 +21,8 @@ type FormikErrorType = {
 }
 
 export const Login = () => {
-  const dispatch = useAppDispatch()
-
+  // const dispatch = useAppDispatch()
+  const { login } = useActions(authThunks)
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
   const formik = useFormik({
@@ -46,7 +46,7 @@ export const Login = () => {
       rememberMe: false,
     },
     onSubmit: (values, formikHelpers: FormikHelpers<FormValues>) => {
-      dispatch(authThunks.login(values))
+      login(values)
         .unwrap() //он следит за тем, какой ответ приходит: если fullfiled - попадем в then, если rejected - попадем в catch. Это нужно, потому что с использованием createAsyncThunk мы всегда получаем promise.fullfiled
         .then((res) => {})
         .catch((err: BaseResponseType) => {
