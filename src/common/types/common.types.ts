@@ -8,7 +8,7 @@ export type FieldErrorType = {
   field: string
 }
 
-//❗ Чтобы у нас не было пересечения имен назовем общий тип BaseBaseResponseType
+//❗ Чтобы у нас не было пересечения имен назовем общий тип BaseResponseType
 export type BaseResponseType<D = {}> = {
   resultCode: number
   messages: string[]

@@ -4,6 +4,14 @@ import { BaseThunkAPI } from "@reduxjs/toolkit/dist/createAsyncThunk"
 import { appActions } from "app/app.reducer"
 import { BaseResponseType } from "common/types"
 
+/**
+
+ Обрабатывает асинхронные операции с использованием блока try-catch внутри Thunk-действия.
+ @template T - Тип возвращаемого значения функции logic.
+ @param {BaseThunkAPI<AppRootStateType, unknown, AppDispatch, null | BaseResponseType>} thunkAPI - Объект API для Thunk-действия.
+ @param {() => Promise<T>} logic - Функция, представляющая асинхронную логику, которая должна быть выполнена.
+ @returns {Promise<T | ReturnType<typeof thunkAPI.rejectWithValue>>} - Промис, который разрешается значением, возвращенным функцией logic, или значением, отклоненным через thunkAPI.rejectWithValue.
+ */
 export const thunkTryCatch = async <T>(
   thunkAPI: BaseThunkAPI<AppRootStateType, unknown, AppDispatch, null | BaseResponseType>,
   logic: () => Promise<T>,
