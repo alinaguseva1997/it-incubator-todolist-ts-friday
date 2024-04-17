@@ -20,3 +20,6 @@ type ReplaceReturnType<T, TNewReturn> = T extends (...args: any[]) => infer R
 type RemapActionCreators<T extends ActionCreatorsMapObject> = {
   [K in keyof T]: ReplaceReturnType<T[K], ActionCreatorResponse<T[K]>>
 }
+
+// Эта типизация дает хуку возможность понимать, что в него приходит, экшен или санка(асинхронный экшен).
+// Нам важно понимать, где будет возвращаться промис, а где нет
